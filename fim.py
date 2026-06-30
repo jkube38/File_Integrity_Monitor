@@ -1,10 +1,13 @@
 import hashlib
 import os
+import argparse
+import sys
+import subprocess
 from pathlib import Path
 # from time import sleep, strftime
 
 
-dir_to_read = Path("/Users/kube/PersonalProjects/codewars/")
+# dir_to_read = Path("/Users/kube/PersonalProjects/codewars/")
 # files = []
 # dirs = []
 
@@ -15,7 +18,8 @@ def file_assembly(path):
     then sends the files list to gen_original_hash to create
     hashes for the files"""
     files = []
-    for f in path.iterdir():
+    sys_path = Path(path)
+    for f in sys_path.iterdir():
         if os.path.isfile(f):
             f_name = os.path.basename(f)
             files.append({'file_name': f_name, 'path': f, 'hash': ''})
@@ -46,4 +50,33 @@ def gen_original_hash(file_list):
     return file_list
 
 
-file_assembly(dir_to_read)
+def create_parser():
+    "Returns an instance of argparse.ArgumentParser"
+    parser = argparse.ArgumentParser(description='''Requires a full filepath
+                                     to inspect files for changes and alerts
+                                     you if any are found.''')
+    parser.add_argument('path', help='''use to check a directories files
+                        for changes (must be full path)!!!''')
+    return parser
+
+
+def main(args):
+    '''File Integrity Monitor'''
+    '''takes command line arguments to run the fim program'''
+
+    parser = create_parser()
+    ns = parser.parse_args(args)
+
+    path = ns.path
+
+    if not ns:
+        parser.print_usage()
+        sys.exit(1)
+
+    file_assembly(path)
+
+    # subprocess.run()
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
