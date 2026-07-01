@@ -6,12 +6,16 @@ from hash_generator import file_assembly
 
 def check_for_recall(path):
     """checks for initial hash repo is users hidden directory
-    in not there it creates one, the checks for the recall file
+    in not there it creates one, then checks for the recall file
     if thats not there it creates one."""
 
     user = getuser()
-    file_path = f'{str(path)}.py'
+    parent = path.split('/')[-1]
+
+    file_path = f'/Users/{user}/.file_integrity_monitor/{parent}.py'
     hash_repo = f'/Users/{user}/.file_integrity_monitor'
+
+    hash_list = file_assembly(path)
 
     if os.path.exists(hash_repo):
         pass
@@ -21,4 +25,7 @@ def check_for_recall(path):
     if os.path.exists(file_path):
         pass
     else:
-        file_assembly(path)
+        with open(f'/Users/{user}/.file_integrity_monitor/{parent}.py',
+                  'x') as file:
+            file.write(f'{parent}_list = {str(hash_list)}')
+    return hash_list

@@ -1,8 +1,6 @@
 import hashlib
 import os
 from pathlib import Path
-from getpass import getuser
-# from time import sleep, strftime
 
 
 files = []
@@ -15,7 +13,6 @@ def file_assembly(path):
     hashes for the files"""
 
     sys_path = Path(path)
-    parent = str(sys_path).split('/')[-1]
 
     try:
         for f in sys_path.iterdir():
@@ -27,16 +24,14 @@ def file_assembly(path):
     except FileNotFoundError:
         print('File not found please check you path and try again!!!')
 
-    gen_original_hash(files, parent)
-    return
+    hashed_files = gen_original_hash(files)
+    return hashed_files
 
 
-def gen_original_hash(file_list, parent):
+def gen_original_hash(file_list):
     """Takes in the file list from file_assembly and generates hashes
     for each file and adds them to the files dictionary, then saves a file
     in the hidden file_integrity_monitor directory for later comparison"""
-
-    user = getuser()
 
     for doc in file_list:
         p = doc['path']
@@ -48,11 +43,5 @@ def gen_original_hash(file_list, parent):
                     doc['hash'] = hasher.hexdigest()
                 else:
                     print('what the f*&%')
-    with open(f'/Users/{user}/.file_integrity_monitor/{parent}.py',
-              'x') as file:
-        file.write(f'{parent}_list = {str(file_list)}')
 
-    for i in file_list:
-        print(i)
-
-    return
+    return file_list

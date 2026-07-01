@@ -1,6 +1,6 @@
 import argparse
 import sys
-from recall import check_for_recall
+from compare import file_to_file
 
 
 def create_parser():
@@ -26,8 +26,7 @@ def main(args):
         parser.print_usage()
         sys.exit(1)
 
-    check_for_recall(path)
-    # subprocess.run()
+    file_to_file(path)
 
 
 if __name__ == "__main__":
