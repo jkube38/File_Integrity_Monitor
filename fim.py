@@ -1,6 +1,6 @@
 import argparse
 import sys
-from compare import file_to_file
+from compare import compare_versions
 
 
 def create_parser():
@@ -26,7 +26,7 @@ def main(args):
         parser.print_usage()
         sys.exit(1)
 
-    file_to_file(path)
+    compare_versions(path)
 
 
 if __name__ == "__main__":
