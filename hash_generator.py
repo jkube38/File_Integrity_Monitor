@@ -1,9 +1,7 @@
 import hashlib
 import os
+import sys
 from pathlib import Path
-
-
-files = []
 
 
 def file_assembly(path):
@@ -13,6 +11,7 @@ def file_assembly(path):
     hashes for the files"""
 
     sys_path = Path(path)
+    files = []
 
     try:
         for f in sys_path.iterdir():
@@ -22,7 +21,8 @@ def file_assembly(path):
             # elif os.path.isdir(f):
             # print(f"DIR: {os.path.basename(f)}")
     except FileNotFoundError:
-        print('File not found please check you path and try again!!!')
+        print('Path to directory does not exist please check your entry and try again!!!!')
+        sys.exit()
 
     hashed_files = gen_original_hash(files)
     return hashed_files
