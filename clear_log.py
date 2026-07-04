@@ -1,5 +1,6 @@
 from getpass import getuser
 import sys
+from pathlib import Path
 
 
 def clear_log_file():

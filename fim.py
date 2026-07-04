@@ -3,6 +3,7 @@ import sys
 from compare import polling_changes
 from show_log import show_log_file
 from clear_log import clear_log_file
+from save_log import save_log_file
 
 
 def create_parser():
@@ -10,8 +11,10 @@ def create_parser():
     parser = argparse.ArgumentParser(description='''Requires a full filepath to inspect files in a directory for
                                     changes and alerts you if any are found, using flags, the log files can be viewed
                                      and reset, and the poling time can also be set to your desired time in seconds''')
+    parser.add_argument('-s', '--save', help='Use the flags with a full path to save the current log file to a '
+                        'specified destination directory (do not include slash a the end of the path).')
     parser.add_argument('-c', '--clearlog', help='Use the flags followed by clearlog to erase the current log '
-                        'file and start a new one')
+                        'file and start a new one.')
     parser.add_argument('-l', '--log', help='Use to view the log files, the flags must be followed by log as an arg.')
     parser.add_argument('-p', '--path', help='''use to check a directories files for changes (must be full path)!!!''')
     return parser
@@ -26,6 +29,8 @@ def main(args):
     path = ns.path
     log = ns.log
     clearlog = ns.clearlog
+    save = ns.save
+    print(ns)
 
     if not ns:
         parser.print_usage()
@@ -39,6 +44,8 @@ def main(args):
         show_log_file()
     elif clearlog:
         clear_log_file()
+    elif save:
+        save_log_file(save)
 
 
 if __name__ == "__main__":

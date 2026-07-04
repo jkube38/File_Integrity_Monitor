@@ -10,8 +10,8 @@ def compare_versions(path):
     # runs the gather hash function to return 2 lists to compare
     # get the lengths of both lists for comparison
     current_list, recall_list = gather_hash_files(path)
-    cur_len = len(current_list)
-    rec_len = len(recall_list)
+    # cur_len = len(current_list)
+    # rec_len = len(recall_list)
 
     # variables used for path variables and writing to files
     present_time = datetime.now()
@@ -24,8 +24,8 @@ def compare_versions(path):
 
     if target_dir.exists():
         directory = str(current_list[0]['path']).split('/')[-2]
-        print(f'scanning \033[3m{directory}\033[0m directory...........{present_time}')
-        print(f'current file count: {cur_len}\nrecall file count: {rec_len}')
+        # print(f'Actively scanning \033[3m{directory}\033[0m directory...........{present_time}')
+        # print(f'current file count: {cur_len}\nrecall file count: {rec_len}')
         # creates a copy of the current list to use for verifictation of file removal
         rec_lst_copy = copy.deepcopy(recall_list)
         cur_lst_copy = copy.deepcopy(current_list)
@@ -36,7 +36,6 @@ def compare_versions(path):
             fname_search = [fn for fn in recall_list if dict['file_name'] == fn['file_name']]
 
             if dict in recall_list:
-                print('.')
                 rec_lst_copy = [d for d in rec_lst_copy if d.get('hash') != dict['hash']]
             elif hash_search:
                 # alerts to terminal of the filename change and updates the log file
@@ -89,6 +88,8 @@ def polling_changes(path):
     user = getuser()
 
     try:
+        directory = str(path).split('/')[-1]
+        print(f'Actively scanning \033[3m{directory}\033[0m directory...........{datetime.now()}')
         while True:
             compare_versions(path)
             time.sleep(10)
