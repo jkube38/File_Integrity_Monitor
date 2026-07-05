@@ -1,16 +1,15 @@
-from getpass import getuser
+import shutil
 from pathlib import Path
 from datetime import datetime
-import shutil
 
 
 def save_log_file(save):
 
-    user = getuser()
     save_path = Path(save)
-    log_path = f'/Users/{user}/.file_integrity_monitor/change_log.txt'
+    log_path = Path.home() / '.file_integrity_monitor' / 'change_log.txt'
     file_name = f'fim_change_log_{datetime.now()}.txt'
     full_save_path = f'{save_path}/{file_name}'
+    full_save_path = Path(save_path) / file_name
 
     if save_path.exists() and save_path.is_dir():
         try:

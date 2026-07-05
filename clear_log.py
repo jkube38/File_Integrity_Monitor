@@ -1,4 +1,3 @@
-from getpass import getuser
 import sys
 from pathlib import Path
 
@@ -7,8 +6,9 @@ def clear_log_file():
     '''When the -c flag is passed into the fim command the log file
     is erased and reset'''
 
-    user = getuser()
-    log_path = f'/Users/{user}/.file_integrity_monitor/change_log.txt'
+    # log_path = f'/Users/{user}/.file_integrity_monitor/change_log.txt'
+    base_path = Path.home()
+    log_path = base_path / '.file_integrity_monitor' / 'change_log.txt'
 
     verify = input("Are you sure? This will permanently erase your logs (y/n):\n")
     if verify == 'n':

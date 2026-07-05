@@ -1,6 +1,5 @@
-import hashlib
-import os
 import sys
+import hashlib
 from pathlib import Path
 
 
@@ -15,8 +14,9 @@ def file_assembly(path):
 
     try:
         for f in sys_path.iterdir():
-            if os.path.isfile(f):
-                f_name = os.path.basename(f)
+            f = Path(f)
+            if f.is_file():
+                f_name = f.name
                 files.append({'file_name': f_name, 'path': f, 'hash': ''})
             # elif os.path.isdir(f):
             # print(f"DIR: {os.path.basename(f)}")
