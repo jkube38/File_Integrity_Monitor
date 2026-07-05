@@ -88,11 +88,12 @@ def polling_changes(path):
     try:
         path = Path(path)
         if path.exists():
+            duration = input(f'Hello {user}; How long would you like the polling intervals to be (in seconds).\n')
             directory = Path(path).stem
             print(f'Actively scanning \033[3m{directory}\033[0m directory...........{datetime.now()}')
             while True:
                 compare_versions(path)
-                time.sleep(10)
+                time.sleep(int(duration))
         else:
             print(f'Your path: \033[3m{path}\33[0m does not exist please check it and try again.')
     except KeyboardInterrupt:
