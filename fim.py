@@ -1,9 +1,9 @@
-import argparse
 import sys
-from compare import polling_changes
+import argparse
 from show_log import show_log_file
-from clear_log import clear_log_file
 from save_log import save_log_file
+from compare import polling_changes
+from clear_log import clear_log_file
 
 
 def create_parser():
@@ -30,7 +30,6 @@ def main(args):
     log = ns.log
     clearlog = ns.clearlog
     save = ns.save
-    print(ns)
 
     if not ns:
         parser.print_usage()

@@ -1,20 +1,18 @@
-import pathlib
 import sys
-from getpass import getuser
+import pathlib
+import builtins
 import importlib.util
 from recall import check_for_recall
-import builtins
 builtins.PosixPath = pathlib.PurePosixPath
+builtins.WindowsPath = pathlib.WindowsPath
 
 
 def gather_hash_files(path):
 
     current_list = check_for_recall(path)
     # variables and paths for accessing files
-    user = getuser()
-    filename = f'{path.split('/')[-1]}'
-    recall_hash_path = pathlib.Path(
-        f'/Users/{user}/.file_integrity_monitor/{filename}.py')
+    filename = path.stem
+    recall_hash_path = pathlib.Path.home() / '.file_integrity_monitor' / f'{filename}.py'
 
     # imports the previouly used list from hash repo to compare previous
     # version with current version of the directory
