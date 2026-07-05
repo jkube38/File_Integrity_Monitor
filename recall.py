@@ -20,9 +20,7 @@ def check_for_recall(path):
         create_file_repo()
 
     if path.exists():
-        if file_path.exists():
-            pass
-        else:
+        if not file_path.exists():
             with open(file_path, 'x') as file:
                 file.write(f'{dir_name}_list = {str(hash_list)}')
     return hash_list

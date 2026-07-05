@@ -5,11 +5,12 @@ from datetime import datetime
 
 def save_log_file(save):
 
+    time_now = str(datetime.now()).replace(":", "-")
+    file_name = f"fim_change_log_{time_now}.txt"
+
     save_path = Path(save)
     log_path = Path.home() / '.file_integrity_monitor' / 'change_log.txt'
-    file_name = f'fim_change_log_{datetime.now()}.txt'
-    full_save_path = f'{save_path}/{file_name}'
-    full_save_path = Path(save_path) / file_name
+    full_save_path = save_path / file_name
 
     if save_path.exists() and save_path.is_dir():
         try:

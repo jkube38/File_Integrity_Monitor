@@ -22,7 +22,7 @@ def compare_versions(path):
     base_path = Path.home() / '.file_integrity_monitor'
 
     if target_dir.exists():
-        directory = str(current_list[0]['path']).split('/')[-2]
+        directory = Path(str(current_list[0]['path'])).parent.name
 
         # creates a copy of the current list to use for verifictation of file removal
         rec_lst_copy = copy.deepcopy(recall_list)
@@ -88,7 +88,7 @@ def polling_changes(path):
     try:
         path = Path(path)
         if path.exists():
-            directory = str(path).split('/')[-1]
+            directory = Path(path).stem
             print(f'Actively scanning \033[3m{directory}\033[0m directory...........{datetime.now()}')
             while True:
                 compare_versions(path)
