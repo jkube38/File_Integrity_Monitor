@@ -25,6 +25,7 @@ def file_assembly(path):
         sys.exit()
 
     hashed_files = gen_original_hash(files)
+
     return hashed_files
 
 
