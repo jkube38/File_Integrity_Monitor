@@ -36,12 +36,17 @@ def gen_original_hash(file_list):
     for doc in file_list:
         p = doc['path']
         hasher = hashlib.sha256()
-        with open(p, 'rb') as f:
-            for piece in iter(lambda: f.read(), b""):
-                hasher.update(piece)
-                if not doc['hash']:
-                    doc['hash'] = hasher.hexdigest()
-                else:
-                    print('what the f*&%')
+        try:
+            with open(p, 'rb') as f:
+                for piece in iter(lambda: f.read(4096), b""):
+                    hasher.update(piece)
+                    if not doc['hash']:
+                        doc['hash'] = hasher.hexdigest()
+                    else:
+                        print('what the f*&%')
+        except PermissionError:
+            print(f'Skipping {doc['file_name']}: File is locked by another process')
+        except FileNotFoundError:
+            print(f'Alert: File {doc['file_name']} MISSING.')
 
     return file_list
