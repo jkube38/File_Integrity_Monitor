@@ -43,7 +43,7 @@ def gen_original_hash(file_list):
                     if not doc['hash']:
                         doc['hash'] = hasher.hexdigest()
                     else:
-                        print('what the f*&%')
+                        pass
         except PermissionError:
             print(f'Skipping {doc['file_name']}: File is locked by another process')
         except FileNotFoundError:
